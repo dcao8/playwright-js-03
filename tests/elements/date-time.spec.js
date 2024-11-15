@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { timePickerTestData, timeRangePickerTestData, datePickerTestData, dateRangePickerTestData, multipleDatePickerTestData } = require('../../data/elements/date-time.spec');
+const { timePickerTestData, timeRangePickerTestData, datePickerTestData, dateRangePickerTestData, multipleDatePickerTestData } = require('../../data/elements/date-time-test-data');
 
 let urlDateTime='https://test-with-me-app.vercel.app/learning/web-elements/elements/date-time';
 
@@ -79,7 +79,7 @@ async function pickDate(page, timeData) {
     let btnPrevMonthXpath="//button[@aria-label='prev-year']";
     let btnPrevYearXpath="//button[@aria-label='super-prev-year']";
     let btnNextYearXpath="//button[@aria-label='super-next-year']";
-    let btnChoosenDateXpath=`//td[contains(@class,'in-view')][./div[normalize-space(text())='${dateToSelect}']]`;
+    let btnChoosenDateXpath=`//td[contains(concat(' ',normalize-space(@class),' '),' ant-picker-cell-in-view ')][./div[normalize-space(text())='${dateToSelect}']]`;
     //select month
     let monthDisplay = await page.locator(monthDisplayXpath).textContent();
     while (monthToSelect != monthDisplay) {
@@ -102,7 +102,7 @@ async function pickDate(page, timeData) {
 multipleDatePickerTestData.forEach(({ listDate, expectedResult }) => {
     test('Verify select Multiple Date Picker', async ({ page }) => {
         await page.goto(urlDateTime);
-        await page.locator("//div[./input[@class='ant-picker-multiple-input']]").click();
+        await page.locator("//div[./input[contains(concat(' ',normalize-space(@class),' '),' ant-picker-multiple-input ')]]").click();
         for (let i = 0; i < listDate.length; i++) {
             await pickDate(page, listDate[i]);
         };
