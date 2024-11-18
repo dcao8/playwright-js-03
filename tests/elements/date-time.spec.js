@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { timePickerTestData, timeRangePickerTestData, datePickerTestData, dateRangePickerTestData, multipleDatePickerTestData } = require('../../data/elements/date-time-test-data');
 
-let urlDateTime='https://test-with-me-app.vercel.app/learning/web-elements/elements/date-time';
+let urlDateTime = 'https://test-with-me-app.vercel.app/learning/web-elements/elements/date-time';
 
 async function selectDateTimePicker(page, placeholder) {
     let pickerXpath = `//div[./input[@placeholder='${placeholder}']]`;
@@ -74,12 +74,12 @@ async function pickDate(page, timeData) {
     let yearToSelect = parts[0];
     let monthToSelect = parts[1];
     let dateToSelect = parts[2];
-    let monthDisplayXpath="//button[@aria-label='month panel']";
-    let yearDisplayXpath="//button[@aria-label='year panel']";
-    let btnPrevMonthXpath="//button[@aria-label='prev-year']";
-    let btnPrevYearXpath="//button[@aria-label='super-prev-year']";
-    let btnNextYearXpath="//button[@aria-label='super-next-year']";
-    let btnChoosenDateXpath=`//td[contains(concat(' ',normalize-space(@class),' '),' ant-picker-cell-in-view ')][./div[normalize-space(text())='${dateToSelect}']]`;
+    let monthDisplayXpath = "//button[@aria-label='month panel']";
+    let yearDisplayXpath = "//button[@aria-label='year panel']";
+    let btnPrevMonthXpath = "//button[@aria-label='prev-year']";
+    let btnPrevYearXpath = "//button[@aria-label='super-prev-year']";
+    let btnNextYearXpath = "//button[@aria-label='super-next-year']";
+    let btnChoosenDateXpath = `//td[contains(concat(' ',normalize-space(@class),' '),' ant-picker-cell-in-view ')][./div[normalize-space(text())='${dateToSelect}']]`;
     //select month
     let monthDisplay = await page.locator(monthDisplayXpath).textContent();
     while (monthToSelect != monthDisplay) {

@@ -1,44 +1,44 @@
 export const rateTestData = [
     {
-        number: "0.5",
+        input: 0.5,
         currentRatingExpected: "terrible"
     },
     {
-        number: "1",
+        input: 1,
         currentRatingExpected: "terrible"
-    }, 
+    },
     {
-        number: "1.5",
+        input: 1.5,
         currentRatingExpected: "bad"
-    }, 
+    },
     {
-        number: "2",
+        input: 2,
         currentRatingExpected: "bad"
-    }, 
+    },
     {
-        number: "2.5",
+        input: 2.5,
         currentRatingExpected: "normal"
-    }, 
+    },
     {
-        number: "3",
+        input: 3,
         currentRatingExpected: "normal"
-    }, 
+    },
     {
-        number: "3.5",
+        input: 3.5,
         currentRatingExpected: "good"
-    }, 
+    },
     {
-        number: "4",
+        input: 4,
         currentRatingExpected: "good"
-    }, 
+    },
     {
-        number: "4.5",
+        input: 4.5,
         currentRatingExpected: "wonderful"
-    }, 
+    },
     {
-        number: "5",
+        input: 5,
         currentRatingExpected: "wonderful"
     }
 ]
 
-export const haftRateTestData = ["0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"]
+export const haftRateTestData = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]

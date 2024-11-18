@@ -1,10 +1,10 @@
 const { test, expect } = require('@playwright/test');
 const { validKeyword, invalidKeyword } = require('../../data/components/auto-complete-test-data');
 
-let inputXpath="//input[@role='combobox']";
+let inputXpath = "//input[@role='combobox']";
 
 async function fillThenSelect(page, keyword, itemOption) {
-    let itemOptionXpath=`//div[@aria-selected='false']//div[normalize-space(text())='${itemOption}']`;
+    let itemOptionXpath = `//div[@aria-selected='false']//div[normalize-space(text())='${itemOption}']`;
     await page.locator(inputXpath).fill(keyword);
     await page.locator(itemOptionXpath).click();
 }

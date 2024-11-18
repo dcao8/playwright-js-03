@@ -64,13 +64,13 @@ export const dateRangePickerTestData = [
         endPlaceholder: "End date",
         endTime: "2024-11-13",
         expectedResult: "2024-11-11 - 2024-11-13"
-    },{
+    }, {
         startPlaceholder: "Start date",
         startTime: "2024-11-11 00:00:30",
         endPlaceholder: "End date",
         endTime: "2024-11-11 00:00:35",
         expectedResult: "2024-11-11 00:00:30 - 2024-11-11 00:00:35"
-    },{
+    }, {
         startPlaceholder: "Start week",
         startTime: "2023-46th",
         endPlaceholder: "End week",
@@ -102,7 +102,7 @@ export const dateRangePickerTestData = [
 
 export const multipleDatePickerTestData = [
     {
-        listDate:["2023-Jan-11", "1993-Dec-14", "2030-Jan-1"],
+        listDate: ["2023-Jan-11", "1993-Dec-14", "2030-Jan-1"],
         expectedResult: "Current date: 1993-12-14, 2023-01-11, 2030-01-01"
     }
 ]
