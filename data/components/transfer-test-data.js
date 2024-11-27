@@ -2,13 +2,13 @@ export const transferTestData = [
     {
         items: ["Apple", "Kiwi"],
         button: "right",
-        sourceItems: ["Banana"],
-        targetItems: ["Apple", "Kiwi", "Orange", "Pineapple", "Strawberry"]
+        fromPanel: 'Source',
+        toPanel: 'Target'
     },
     {
         items: ["Orange", "Pineapple", "Strawberry"],
         button: "left",
-        sourceItems: ["Apple", "Banana", "Kiwi", "Orange", "Pineapple", "Strawberry"],
-        targetItems: []
+        fromPanel: 'Target',
+        toPanel: 'Source'
     }
 ]
