@@ -6,7 +6,7 @@ let urlUpload = 'https://test-with-me-app.vercel.app/learning/web-elements/compo
 uploadTestData.forEach(({ testCase, pathFolder, uploadFile }) => {
     test(`Verify ${testCase}`, async ({ page }) => {
         await page.goto(urlUpload);
-        let inputClickToUploadXpath = "//button[.//text()[normalize-space()='Click to Upload']]/preceding-sibling::input[@type='file']";
+        let inputClickToUploadXpath = "(//button[.//text()[normalize-space()='Click to Upload']]/preceding-sibling::input[@type='file'])[1]";
         for (let i = 0; i < uploadFile.length; i++) {
             let pathToUploadFile = path.join(process.cwd(),`${pathFolder}/${uploadFile[i]}`);
             await page.locator(inputClickToUploadXpath).setInputFiles(pathToUploadFile);
