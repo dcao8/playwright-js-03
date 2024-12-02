@@ -19,3 +19,9 @@ dragAndDropTestData.forEach(({ itemToBeDragged, itemToBeDropAt, itemsInLeftPanel
         await expect.soft(page.locator(actualItemsInRightPanelXpath)).toHaveText(itemsInRightPanel);
     })
 })
+
+test(`Verify drag and drop`,async({page})=>{
+    await page.goto(urlDragAndDrop);
+
+    let leftPanelXpath
+})
