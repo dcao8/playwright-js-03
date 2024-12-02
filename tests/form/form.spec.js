@@ -98,9 +98,6 @@ invalidDateOfBirthTestData.forEach(invalidDateOfBirth => {
     });
 })
 
-//Application of "afasf"
-//Your application has been submitted successfully.
-
 validFieldsTestData.forEach(({ fullNameInput, emailInput, phoneNumberInput, dateOfBirthInput, addressInput, occupationInput, companyInput }) => {
     test('Verify submitting the form after filling in all fields', async ({ page }) => {
         await page.goto(urlForm);
