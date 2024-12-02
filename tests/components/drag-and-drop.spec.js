@@ -13,15 +13,9 @@ dragAndDropTestData.forEach(({ itemToBeDragged, itemToBeDropAt, itemsInLeftPanel
     test(`Verify drag '${itemToBeDragged}' to '${itemToBeDropAt}'`, async ({ page }) => {
         await page.goto(urlDragAndDrop);
         await dragAndDropItem(itemToBeDragged, itemToBeDropAt, page);
-        let actualItemsInLeftPanelXpath = "(//div[contains(concat(' ',@class,' '), ' ant-space-item ') and .//button[@type='button']])[1]//span";
+        let actualItemsInLeftPanelXpath = "//div[contains(concat(' ',@class,' '), ' border-teal-500 ') and .//button[@type='button']]//span";
         await expect.soft(page.locator(actualItemsInLeftPanelXpath)).toHaveText(itemsInLeftPanel);
-        let actualItemsInRightPanelXpath = "(//div[contains(concat(' ',@class,' '), ' ant-space-item ') and .//button[@type='button']])[2]//span";
+        let actualItemsInRightPanelXpath = "//div[contains(concat(' ',@class,' '), ' border-orange-500 ') and .//button[@type='button']]//span";
         await expect.soft(page.locator(actualItemsInRightPanelXpath)).toHaveText(itemsInRightPanel);
     })
-})
-
-test(`Verify drag and drop`,async({page})=>{
-    await page.goto(urlDragAndDrop);
-
-    let leftPanelXpath
 })
