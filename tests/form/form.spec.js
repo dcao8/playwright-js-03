@@ -1,29 +1,29 @@
 const { test, expect } = require('@playwright/test');
-const { emptyFieldsTestData, invalidEmailTestData, invalidPhoneTestData, invalidDateOfBirthTestData } = require('../../data/form/form-test-date');
+const { emptyFieldsTestData, invalidEmailTestData, invalidPhoneTestData, invalidDateOfBirthTestData, validFieldsTestData } = require('../../data/form/form-test-date');
 
 let urlForm = 'https://test-with-me-app.vercel.app/learning/web-elements/form';
 let btnSubmitXpath = "//button[.//text()[normalize-space()='Submit']]";
-let INVALID_EMAIL_ERROR = 'The input is not valid E-mail!';
-let INVALID_PHONE_NUMBER_ERROR = 'Phone number must be 10 digits!';
-let INVALID_DOB_ERROR = 'You must be at least 18 years old!';
+const INVALID_EMAIL_ERROR = 'The input is not valid E-mail!';
+const INVALID_PHONE_NUMBER_ERROR = 'Phone number must be 10 digits!';
+const INVALID_DOB_ERROR = 'You must be at least 18 years old!';
 
 async function fillInField(field, value, page) {
-    let locator = page.locator(`//div[./label[.//text()[normalize-space()='${field}']]]//following-sibling::div//input[@type='text']`);
+    let locator = page.locator(`(//div[./label[.//text()[normalize-space()='${field}']]]//following-sibling::div)[1]//input[@type='text']`);
     await locator.clear();
     await locator.fill(value);
     await locator.press('Tab');
 }
 
 async function verifyError(field, error, page) {
-    let errorXpath = `//div[./label[.//text()[normalize-space()='${field}']]]//following-sibling::div//div[contains(concat(' ',@class,' '), ' ant-form-item-explain-error ')]`;
-    let numberOfError = await page.locator(errorXpath).count();
-    if (numberOfError > 1) {
-        for (let i = 1; i <= numberOfError; i++) {
-            await expect.soft(page.locator(errorXpath + `[${i}]`)).toHaveText(error[i - 1]);
-        }
-    } else {
-        await expect.soft(page.locator(errorXpath)).toHaveText(error);
-    }
+    let errorXpath = `(//div[./label[.//text()[normalize-space()='${field}']]]//following-sibling::div)[1]//div[@role='alert']`;
+    await expect.soft(page.locator(errorXpath)).toHaveText(error);
+}
+
+async function verifyNotification(fullName, page) {
+    let notificationMessageXpath = "//div[@role='alert']/div[contains(concat(' ',@class,' '), ' ant-notification-notice-message ')]";
+    await expect.soft(page.locator(notificationMessageXpath)).toHaveText(`Application of "${fullName}"`);
+    let notificationDescriptionXpath = "//div[@role='alert']/div[contains(concat(' ',@class,' '), ' ant-notification-notice-description ')]";
+    await expect.soft(page.locator(notificationDescriptionXpath)).toHaveText(`Your application has been submitted successfully.`);
 }
 
 async function pickDate(timeData, page) {
@@ -54,6 +54,12 @@ async function pickDate(timeData, page) {
     }
     //select date
     await page.locator(btnChoosenDateXpath).click();
+}
+
+async function selectDOB(dob, page) {
+    let dateOfBirthPickerXpath = "(//div[./label[.//text()[normalize-space()='Date of Birth']]]//following-sibling::div)[1]//div[./input]";
+    await page.locator(dateOfBirthPickerXpath).click();
+    await pickDate(dob, page);
 }
 
 emptyFieldsTestData.forEach(({ fullNameError, emailError, phoneNumberError, dateOfBirthError, addressError }) => {
@@ -87,12 +93,26 @@ invalidPhoneTestData.forEach(invalidPhoneNumber => {
 invalidDateOfBirthTestData.forEach(invalidDateOfBirth => {
     test(`Validate Email field with '${invalidDateOfBirth}' value`, async ({ page }) => {
         await page.goto(urlForm);
-        let dateOfBirthPickerXpath = "//div[./label[.//text()[normalize-space()='Date of Birth']]]//following-sibling::div//div[./input]";
-        await page.locator(dateOfBirthPickerXpath).click();
-        await pickDate(invalidDateOfBirth, page);
+        await selectDOB(invalidDateOfBirth, page);
         await verifyError('Date of Birth', INVALID_DOB_ERROR, page);
     });
 })
 
+//Application of "afasf"
+//Your application has been submitted successfully.
 
+validFieldsTestData.forEach(({ fullNameInput, emailInput, phoneNumberInput, dateOfBirthInput, addressInput, occupationInput, companyInput }) => {
+    test('Verify submitting the form after filling in all fields', async ({ page }) => {
+        await page.goto(urlForm);
+        await fillInField('Full Name', fullNameInput, page);
+        await fillInField('Email', emailInput, page);
+        await fillInField('Phone Number', phoneNumberInput, page);
+        await selectDOB(dateOfBirthInput, page);
+        await fillInField('Address', addressInput, page);
+        await fillInField('Occupation', occupationInput, page);
+        await fillInField('Company', companyInput, page);
+        await page.locator(btnSubmitXpath).click();
+        await verifyNotification(fullNameInput, page);
+    });
+});
 
