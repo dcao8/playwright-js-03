@@ -71,7 +71,7 @@ export const formTestDataSuccessCases = [
             "Address": "Ho Chi Minh City",
             "Occupation": "Tester",
             "Company": "Apple Inc."
-        },
+        }
     },
     {
         testCaseName: "Submit form in case of all fields are filled but occupation and company",
@@ -82,6 +82,6 @@ export const formTestDataSuccessCases = [
             "Phone Number": "1234567890",
             "Date of Birth": "1993-12-14",
             "Address": "Ho Chi Minh City"
-        },
+        }
     }
 ]

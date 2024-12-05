@@ -10,8 +10,7 @@ formTestDataFailureCases.forEach(({ testCaseName, tags, data }) => {
                 await fillFormField(field, data[field].input, page);
             }
         }
-        let btnSubmitXpath = "//button[.//text()[normalize-space()='Submit']]";
-        await page.locator(btnSubmitXpath).click();
+        await clickButtonByText('Submit', page);
         for (let field in data) {
             if (data.hasOwnProperty(field)) {
                 let genericXpathForErrorMessage = `(//label[normalize-space(text())='${field}']/following::div[@role='alert'])[1]`;
@@ -30,16 +29,18 @@ formTestDataSuccessCases.forEach(({ testCaseName, tags, data }) => {
                 await fillFormField(field, data[field], page);
             }
         }
-        let btnSubmitXpath = "//button[.//text()[normalize-space()='Submit']]";
-        await page.locator(btnSubmitXpath).click();
-        let notificationMessageXpath = "//div[@role='alert']/div[contains(concat(' ',@class,' '), ' ant-notification-notice-message ')]";
-        await expect.soft(page.locator(notificationMessageXpath)).toHaveText(`Application of "${data['Full Name']}"`);
-        let notificationDescriptionXpath = "//div[@role='alert']/div[contains(concat(' ',@class,' '), ' ant-notification-notice-description ')]";
-        await expect.soft(page.locator(notificationDescriptionXpath)).toHaveText(`Your application has been submitted successfully.`);
+        await clickButtonByText('Submit', page);
+        let notificationXpath = "//div[@role='alert']";
+        await expect(page.locator(notificationXpath)).toHaveText(`Application of "${data['Full Name']}"Your application has been submitted successfully.`);
     });
 });
 
 async function fillFormField(field, value, page) {
     let genericXpathForInput = `(//label[normalize-space(text())='${field}']/following::input)[1]`;
     await page.locator(genericXpathForInput).fill(value);
+}
+
+async function clickButtonByText(text, page) {
+    let btnSubmitXpath = `//button[.//text()[normalize-space()='${text}']]`;
+    await page.locator(btnSubmitXpath).click();
 }
