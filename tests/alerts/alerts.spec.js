@@ -52,17 +52,17 @@ test(`Verify Alert with prompt box`, async ({ page }) => {
         let alertsType = 'Alert with prompt box';
         await page.goto(alertsUrl);
         page.on('dialog', async dialog => {
-            expect.soft(dialog.message()).toBe('Please enter your name:');
-            if (option == 'OK') {
-                await dialog.accept();
-            }
-            else {
-                await dialog.dismiss();
-            }
-            page.on('dialog', async dialog => {
+            if (dialog.message().match('Please enter your name:')) {
+                if (option == 'OK') {
+                    await dialog.accept();
+                }
+                else {
+                    await dialog.dismiss();
+                }
+            } else {
                 expect.soft(dialog.message()).toBe('Name is required!');
                 await dialog.accept();
-            });
+            }
         });
         await page.locator(buildButtonXpath(alertsType)).click();
         let labelSelectValueXpath = `(//div[.//text()[normalize-space()='${alertsType}']]/following-sibling::div[.//text()[normalize-space()='Entered value:']])[1]`;
